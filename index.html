@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>card4u — Cinematic, Interactive Digital Cards & Invitations</title>
+  <meta name="description" content="Create magical interactive digital greeting cards and wedding invitations with 3D wax seal envelopes, scratch-to-reveal surprises, background music, and live RSVP. 100% Free.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D4AF37'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              gold: '#D4AF37',
+              dark: '#0A0A0D',
+              surface: '#121218',
+              card: '#181822',
+              rose: '#E11D48',
+              amber: '#F59E0B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#09090C] text-gray-100 min-h-screen selection:bg-amber-500/30 selection:text-amber-200">
+
+  <!-- Top Announcement Bar (Highlights 100% Free without Pricing) -->
+  <div class="bg-gradient-to-r from-amber-600/20 via-yellow-500/20 to-rose-600/20 border-b border-amber-500/20 py-2 px-4 text-center text-xs sm:text-sm font-medium flex items-center justify-center gap-2">
+    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-400 text-black">100% FREE</span>
+    <span>No watermarks, no subscriptions, unlimited cards. Create & share in seconds!</span>
+    <a href="studio.html" class="underline hover:text-amber-300 font-semibold ml-1">Create a card &rarr;</a>
+  </div>
+
+  <!-- Main Navigation -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-2 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition">
+          <i data-lucide="sparkles" class="w-5 h-5 text-black"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-2xl font-extrabold tracking-tight text-white flex items-center">
+            card<span class="text-amber-400">4u</span>
+          </span>
+          <span class="text-[10px] tracking-widest uppercase text-amber-300/70 font-semibold -mt-1">Interactive Studio</span>
+        </div>
+      </a>
+
+      <!-- Desktop Links (Notice: No Pricing) -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+        <a href="#templates" class="hover:text-amber-400 transition flex items-center gap-1.5">
+          <i data-lucide="layout-grid" class="w-4 h-4 text-amber-400"></i> Templates
+        </a>
+        <a href="#features" class="hover:text-amber-400 transition flex items-center gap-1.5">
+          <i data-lucide="wand-2" class="w-4 h-4 text-amber-400"></i> Features
+        </a>
+        <a href="#how-it-works" class="hover:text-amber-400 transition flex items-center gap-1.5">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400"></i> How It Works
+        </a>
+        <a href="#demo-envelope" class="hover:text-amber-400 transition flex items-center gap-1.5">
+          <i data-lucide="mail-open" class="w-4 h-4 text-amber-400"></i> Interactive Demo
+        </a>
+        <a href="#faq" class="hover:text-amber-400 transition">FAQ</a>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="flex items-center gap-4">
+        <a href="studio.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 text-black font-semibold text-sm shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 hover:scale-105 transition-all">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          <span>Create Free Card</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative pt-12 pb-24 overflow-hidden">
+    <!-- Ambient Background Lighting -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-amber-500/10 blur-[140px] rounded-full pointer-events-none"></div>
+    <div class="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-rose-600/10 blur-[130px] rounded-full pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <!-- Floating Pill -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill border border-amber-400/30 text-amber-300 text-xs sm:text-sm font-semibold mb-6 shadow-sm">
+          <i data-lucide="flame" class="w-4 h-4 text-amber-400"></i>
+          <span>Next-Generation Digital Celebration Websites</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+          Turn Wishes into <br>
+          <span class="gold-text-gradient font-serif-luxury italic">Cinematic Experiences</span>
+        </h1>
+
+        <p class="text-lg sm:text-xl text-gray-300 leading-relaxed font-light mb-8">
+          Say goodbye to plain paper cards and boring PDF invites. With <strong class="text-white font-semibold">card4u</strong>, send unsealable 3D wax envelopes, interactive scratch-to-reveal surprises, background music, and live RSVP tracking — shared instantly via a free WhatsApp web link.
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="studio.html" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 text-black font-bold text-base shadow-xl shadow-amber-500/30 hover:scale-105 transition-transform flex items-center justify-center gap-2">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+            <span>Design Your Card Now</span>
+          </a>
+          <a href="#demo-envelope" class="w-full sm:w-auto px-8 py-4 rounded-full glass-panel hover:bg-white/10 text-white font-semibold text-base border border-white/20 transition flex items-center justify-center gap-2">
+            <i data-lucide="play" class="w-4 h-4 text-amber-400"></i>
+            <span>Try Interactive Demo</span>
+          </a>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-gray-400 font-medium">
+          <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-amber-400"></i> 100% Free Forever</span>
+          <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-amber-400"></i> No App Download Required</span>
+          <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-amber-400"></i> Works on iPhone & Android</span>
+          <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-4 h-4 text-amber-400"></i> Instant WhatsApp Delivery</span>
+        </div>
+      </div>
+
+      <!-- Live Interactive Envelope Showcase on Hero -->
+      <div id="demo-envelope" class="relative max-w-xl mx-auto pt-6 pb-8">
+        <div class="text-center mb-4">
+          <span class="inline-block text-xs uppercase tracking-widest text-amber-400/80 font-bold bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
+            Interactive Live Preview
+          </span>
+          <p class="text-xs text-gray-400 mt-1">Tap the golden wax seal below to open!</p>
+        </div>
+
+        <!-- Envelope 3D Widget -->
+        <div class="envelope-stage py-6">
+          <div id="hero-envelope" class="envelope-wrapper">
+            <!-- Envelope Body -->
+            <div class="envelope-body" style="background: #4A0E17;">
+              <!-- Envelope Pocket Folders -->
+              <div class="envelope-pocket-left"></div>
+              <div class="envelope-pocket-right"></div>
+              <div class="envelope-pocket-bottom"></div>
+            </div>
+
+            <!-- Card Letter inside envelope -->
+            <div class="envelope-letter flex flex-col justify-between" style="border: 1px solid #E5D5BA;">
+              <div>
+                <div class="flex items-center justify-between border-b border-amber-900/20 pb-1 mb-2">
+                  <span class="text-[11px] font-royal uppercase tracking-widest text-amber-800 font-bold">A Special Delivery</span>
+                  <span class="text-xs">🎂</span>
+                </div>
+                <h4 class="font-serif-luxury text-base font-bold text-gray-900">Happy Birthday, Maya! ✨</h4>
+                <p class="text-[11px] text-gray-600 mt-1 line-clamp-3 italic">
+                  "May your year be filled with golden memories, wild laughter, and everything your heart dreams of..."
+                </p>
+              </div>
+              <div class="pt-2 border-t border-amber-900/10 flex items-center justify-between">
+                <span class="text-[10px] text-amber-900 font-medium">With all our love ❤️</span>
+                <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Tap to view full card &rarr;</span>
+              </div>
+            </div>
+
+            <!-- Envelope Top Flap -->
+            <div class="envelope-flap"></div>
+
+            <!-- Wax Seal Stamp Button -->
+            <button id="hero-wax-seal" class="wax-seal" title="Click to break seal and open card">
+              <div class="wax-seal-inner">
+                <i data-lucide="heart" class="w-5 h-5 fill-current"></i>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Reset Button -->
+        <div class="text-center mt-4">
+          <button id="hero-reset-btn" class="hidden text-xs text-amber-300 hover:text-amber-200 underline font-medium">
+            Fold envelope back & test again
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Occasions & Templates Catalog Section -->
+  <section id="templates" class="py-20 border-t border-white/5 bg-[#0D0D12] relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="text-xs uppercase tracking-widest text-amber-400 font-bold">Luxury Design Collection</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">
+            Browse Handcrafted Templates
+          </h2>
+          <p class="text-gray-400 text-sm mt-2 max-w-xl">
+            Choose from cinematic wedding invites, dazzling birthday cards, and romantic letters. Customize text, photos, and music in seconds.
+          </p>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="mt-6 md:mt-0 flex flex-wrap gap-2" id="category-tabs">
+          <button data-cat="all" class="cat-tab px-4 py-2 rounded-full text-xs font-semibold bg-amber-400 text-black shadow-md">
+            All Occasions
+          </button>
+          <button data-cat="wedding" class="cat-tab px-4 py-2 rounded-full text-xs font-semibold bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10">
+            💍 Weddings
+          </button>
+          <button data-cat="birthday" class="cat-tab px-4 py-2 rounded-full text-xs font-semibold bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10">
+            🎂 Birthdays
+          </button>
+          <button data-cat="love" class="cat-tab px-4 py-2 rounded-full text-xs font-semibold bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10">
+            ❤️ Love & Letters
+          </button>
+          <button data-cat="anniversary" class="cat-tab px-4 py-2 rounded-full text-xs font-semibold bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10">
+            🥂 Anniversaries
+          </button>
+          <button data-cat="baby" class="cat-tab px-4 py-2 rounded-full text-xs font-semibold bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10">
+            👶 Baby Shower
+          </button>
+        </div>
+      </div>
+
+      <!-- Templates Grid -->
+      <div id="template-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Dynamically rendered or static pre-populated from templates.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Features Section -->
+  <section id="features" class="py-20 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs uppercase tracking-widest text-amber-400 font-bold">Why card4u Stands Out</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">
+          Features that Make Hearts Melt
+        </h2>
+        <p class="text-gray-400 text-sm mt-2">
+          Every card is a multisensory digital keepsake packed with physical-world delights.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Feature 1: Wax Seal Envelope -->
+        <div class="glass-panel p-8 rounded-2xl border border-white/10 hover:border-amber-400/40 transition group">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-600 to-yellow-400 flex items-center justify-center text-black mb-6 group-hover:scale-110 transition shadow-lg shadow-amber-500/20">
+            <i data-lucide="mail" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">3D Wax Seal Opening</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Recipients tap a realistic golden wax seal with authentic crackle sound effects, watching the envelope fold back to unveil their personalized invitation.
+          </p>
+        </div>
+
+        <!-- Feature 2: Scratch Card -->
+        <div class="glass-panel p-8 rounded-2xl border border-white/10 hover:border-amber-400/40 transition group">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-yellow-500 to-amber-300 flex items-center justify-center text-black mb-6 group-hover:scale-110 transition shadow-lg shadow-amber-500/20">
+            <i data-lucide="coins" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Scratch-to-Reveal Surprises</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Hide secret messages, venue secrets, or romantic surprises beneath a metallic gold foil layer that guests scratch off with their finger or mouse.
+          </p>
+        </div>
+
+        <!-- Feature 3: Integrated Music -->
+        <div class="glass-panel p-8 rounded-2xl border border-white/10 hover:border-amber-400/40 transition group">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-rose-500 to-pink-300 flex items-center justify-center text-black mb-6 group-hover:scale-110 transition shadow-lg shadow-rose-500/20">
+            <i data-lucide="music" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Cinematic Soundtracks</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Set the emotional tone with built-in romantic piano, royal wedding shehnai, festive chimes, or upload your own song for the perfect backdrop.
+          </p>
+        </div>
+
+        <!-- Feature 4: Live Countdown & Map -->
+        <div class="glass-panel p-8 rounded-2xl border border-white/10 hover:border-amber-400/40 transition group">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-500 to-cyan-300 flex items-center justify-center text-black mb-6 group-hover:scale-110 transition shadow-lg shadow-blue-500/20">
+            <i data-lucide="clock" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Live Countdown & Venue Maps</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            A real-time ticker ticks down days, hours, and seconds to the big day, with 1-click Google Maps navigation so guests never get lost.
+          </p>
+        </div>
+
+        <!-- Feature 5: RSVP & Wishes Wall -->
+        <div class="glass-panel p-8 rounded-2xl border border-white/10 hover:border-amber-400/40 transition group">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-300 flex items-center justify-center text-black mb-6 group-hover:scale-110 transition shadow-lg shadow-emerald-500/20">
+            <i data-lucide="message-square-heart" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">Interactive RSVP & Wishes Wall</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Guests confirm their attendance and post heartfelt wishes directly on the card, creating an everlasting digital celebration guestbook.
+          </p>
+        </div>
+
+        <!-- Feature 6: Zero Paywalls / 100% Free -->
+        <div class="glass-panel p-8 rounded-2xl border border-white/10 hover:border-amber-400/40 transition group">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-purple-500 to-indigo-300 flex items-center justify-center text-black mb-6 group-hover:scale-110 transition shadow-lg shadow-purple-500/20">
+            <i data-lucide="gift" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">No Paywalls or Watermarks</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            No pricing plans, no hidden paywalls, and no unsightly logos stamped across your heartfelt memories. Designed purely to spread joy.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Comparison Table -->
+  <section class="py-16 bg-[#0B0B0F] border-y border-white/5">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+          Why People Love card4u Over Traditional Cards
+        </h2>
+        <p class="text-gray-400 text-sm mt-1">See how an interactive digital website elevates the moment</p>
+      </div>
+
+      <div class="glass-panel rounded-2xl border border-white/10 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead>
+              <tr class="border-b border-white/10 bg-white/5 text-gray-300 text-xs uppercase tracking-wider">
+                <th class="py-4 px-6 font-semibold">Features</th>
+                <th class="py-4 px-6 font-bold text-amber-400">card4u Interactive</th>
+                <th class="py-4 px-6 text-gray-400">Static PDF / JPEG</th>
+                <th class="py-4 px-6 text-gray-400">Printed Paper Cards</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-gray-300">
+              <tr>
+                <td class="py-4 px-6 font-medium text-white">3D Wax Seal Opening</td>
+                <td class="py-4 px-6 text-emerald-400 font-semibold flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> Yes, Animated</td>
+                <td class="py-4 px-6 text-gray-500">❌ None</td>
+                <td class="py-4 px-6 text-gray-400">Physical Only</td>
+              </tr>
+              <tr>
+                <td class="py-4 px-6 font-medium text-white">Scratch-off Secret Surprise</td>
+                <td class="py-4 px-6 text-emerald-400 font-semibold flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> Yes, Coin Drag</td>
+                <td class="py-4 px-6 text-gray-500">❌ None</td>
+                <td class="py-4 px-6 text-gray-500">❌ Rare / Costly</td>
+              </tr>
+              <tr>
+                <td class="py-4 px-6 font-medium text-white">Background Music</td>
+                <td class="py-4 px-6 text-emerald-400 font-semibold flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> Yes, Automatic</td>
+                <td class="py-4 px-6 text-gray-500">❌ None</td>
+                <td class="py-4 px-6 text-gray-500">❌ None</td>
+              </tr>
+              <tr>
+                <td class="py-4 px-6 font-medium text-white">Live Countdown & Maps</td>
+                <td class="py-4 px-6 text-emerald-400 font-semibold flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> Real-time Ticker</td>
+                <td class="py-4 px-6 text-gray-500">❌ Static</td>
+                <td class="py-4 px-6 text-gray-500">❌ Static</td>
+              </tr>
+              <tr>
+                <td class="py-4 px-6 font-medium text-white">Guest RSVP & Wishes Wall</td>
+                <td class="py-4 px-6 text-emerald-400 font-semibold flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> Built-in</td>
+                <td class="py-4 px-6 text-gray-500">❌ None</td>
+                <td class="py-4 px-6 text-gray-500">Manual Phone Calls</td>
+              </tr>
+              <tr>
+                <td class="py-4 px-6 font-medium text-white">Cost & Access</td>
+                <td class="py-4 px-6 text-amber-400 font-bold">100% Free Forever</td>
+                <td class="py-4 px-6 text-gray-400">Often Paid</td>
+                <td class="py-4 px-6 text-gray-400">₹3,000 - ₹25,000+</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="py-20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs uppercase tracking-widest text-amber-400 font-bold">Simple 3-Step Process</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">
+          Create & Send in Under 2 Minutes
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        <!-- Step 1 -->
+        <div class="glass-panel p-8 rounded-2xl border border-white/10 relative text-center">
+          <div class="w-14 h-14 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-extrabold text-xl flex items-center justify-center mx-auto mb-6">
+            1
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Pick a Template</h3>
+          <p class="text-gray-400 text-sm">
+            Choose from royal weddings, sparkling birthdays, or vintage love letters.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="glass-panel p-8 rounded-2xl border border-white/10 relative text-center">
+          <div class="w-14 h-14 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-extrabold text-xl flex items-center justify-center mx-auto mb-6">
+            2
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Personalize Details</h3>
+          <p class="text-gray-400 text-sm">
+            Add names, event date, polaroid photos, secret scratch message, and choose your soundtrack.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="glass-panel p-8 rounded-2xl border border-white/10 relative text-center">
+          <div class="w-14 h-14 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 font-extrabold text-xl flex items-center justify-center mx-auto mb-6">
+            3
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Share Link or QR</h3>
+          <p class="text-gray-400 text-sm">
+            Send directly on WhatsApp, text, or download a printable QR code for gifting.
+          </p>
+        </div>
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="studio.html" class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 text-black font-bold text-base shadow-xl shadow-amber-500/25 hover:scale-105 transition">
+          <i data-lucide="wand-2" class="w-5 h-5"></i>
+          <span>Launch Card Studio Now</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wall of Love / Testimonials -->
+  <section class="py-20 bg-[#0C0C11] border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs uppercase tracking-widest text-amber-400 font-bold">Real Stories</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">
+          Loved by Thousands of Celebrants
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="glass-panel p-6 rounded-2xl border border-white/10">
+          <div class="flex items-center gap-1 text-amber-400 mb-4">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="text-gray-300 text-sm italic mb-4">
+            "Sent the Royal Vivah card to all our wedding guests via WhatsApp. Everyone was blown away by the unsealing wax animation and palace shehnai music! Best part? It was 100% free!"
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-rose-400 flex items-center justify-center text-black font-bold text-sm">
+              RM
+            </div>
+            <div>
+              <h4 class="text-white font-semibold text-sm">Rohan & Meera</h4>
+              <p class="text-xs text-gray-400">Wedding, Udaipur</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel p-6 rounded-2xl border border-white/10">
+          <div class="flex items-center gap-1 text-amber-400 mb-4">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="text-gray-300 text-sm italic mb-4">
+            "The scratch-to-reveal card is pure genius. I hid our secret birthday party location under the gold foil, and my bestie literally screamed with excitement when she scratched it off!"
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-500 flex items-center justify-center text-black font-bold text-sm">
+              AK
+            </div>
+            <div>
+              <h4 class="text-white font-semibold text-sm">Ananya K.</h4>
+              <p class="text-xs text-gray-400">25th Birthday, Mumbai</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel p-6 rounded-2xl border border-white/10">
+          <div class="flex items-center gap-1 text-amber-400 mb-4">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="text-gray-300 text-sm italic mb-4">
+            "We used the vintage love letter template for our 5th anniversary. The polaroid slideshow and gentle piano melody made my wife tear up. Beautifully designed tool."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-400 to-purple-500 flex items-center justify-center text-black font-bold text-sm">
+              VS
+            </div>
+            <div>
+              <h4 class="text-white font-semibold text-sm">Varun Sharma</h4>
+              <p class="text-xs text-gray-400">Anniversary, Bengaluru</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section (Explicitly confirming no pricing) -->
+  <section id="faq" class="py-20 border-t border-white/5">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <span class="text-xs uppercase tracking-widest text-amber-400 font-bold">Got Questions?</span>
+        <h2 class="text-3xl font-extrabold text-white mt-1">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="space-y-4">
+        <div class="glass-panel p-6 rounded-2xl border border-white/10">
+          <h3 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+            <i data-lucide="help-circle" class="w-4 h-4 text-amber-400"></i>
+            Is card4u really 100% free with no hidden charges?
+          </h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Yes! card4u is completely free. We do not have any pricing tiers, subscriptions, paywalls, or hidden fees. You can design, customize, and share unlimited interactive digital cards with zero watermarks.
+          </p>
+        </div>
+
+        <div class="glass-panel p-6 rounded-2xl border border-white/10">
+          <h3 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+            <i data-lucide="help-circle" class="w-4 h-4 text-amber-400"></i>
+            Do my friends or guests need to download an app?
+          </h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            No! Every card is a fast, responsive web link that opens smoothly in any web browser on iPhone, Android, tablets, and computers.
+          </p>
+        </div>
+
+        <div class="glass-panel p-6 rounded-2xl border border-white/10">
+          <h3 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+            <i data-lucide="help-circle" class="w-4 h-4 text-amber-400"></i>
+            How does the Scratch-to-Reveal card work?
+          </h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            When you create your card in Studio, you can type any secret note or surprise (like a gift code, flight announcement, or heartfelt confession). When the recipient receives the card, it is shielded by metallic gold foil that they scratch away interactively!
+          </p>
+        </div>
+
+        <div class="glass-panel p-6 rounded-2xl border border-white/10">
+          <h3 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+            <i data-lucide="help-circle" class="w-4 h-4 text-amber-400"></i>
+            How do I share my card after creating it?
+          </h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            After customizing your card, click "Share Card" to copy a direct link, send it with 1-click on WhatsApp, or download a printable QR code!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Banner -->
+  <section class="py-20 relative overflow-hidden bg-gradient-to-b from-[#09090C] via-[#15111D] to-[#09090C]">
+    <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+      <div class="inline-flex p-3 rounded-2xl bg-amber-400/10 border border-amber-400/20 text-amber-400 mb-6">
+        <i data-lucide="sparkles" class="w-8 h-8"></i>
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-white mb-6">
+        Make Someone Smile Today
+      </h2>
+      <p class="text-gray-300 text-base sm:text-lg mb-8 max-w-xl mx-auto font-light">
+        Bring your invitations and heartfelt messages to life with card4u. It takes less than two minutes and is completely free forever.
+      </p>
+      <a href="studio.html" class="inline-flex items-center gap-2 px-9 py-4 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 text-black font-bold text-lg shadow-xl shadow-amber-500/30 hover:scale-105 transition">
+        <span>Start Designing for Free</span>
+        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer (No Pricing link) -->
+  <footer class="border-t border-white/10 bg-[#07070A] py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/5">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-amber-400 flex items-center justify-center text-black font-bold">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+          </div>
+          <span class="text-xl font-bold text-white tracking-tight">card<span class="text-amber-400">4u</span></span>
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400">
+          <a href="#templates" class="hover:text-amber-400 transition">Templates</a>
+          <a href="#features" class="hover:text-amber-400 transition">Features</a>
+          <a href="#how-it-works" class="hover:text-amber-400 transition">How It Works</a>
+          <a href="studio.html" class="hover:text-amber-400 transition">Card Studio</a>
+          <a href="#faq" class="hover:text-amber-400 transition">FAQ</a>
+        </div>
+      </div>
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+        <p>&copy; 2026 card4u. Built with ❤️ for unforgettable celebrations.</p>
+        <p class="flex items-center gap-2">
+          <span>100% Free Forever</span> &bull; <span>No Paywalls</span> &bull; <span>Privacy First</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/scratch.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

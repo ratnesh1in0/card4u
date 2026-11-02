@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Special Delivery For You — card4u</title>
+  <meta name="description" content="You have received an interactive celebration card with music, wax seal, and scratch-off surprises.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D4AF37'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              gold: '#D4AF37',
+              dark: '#0A0A0D',
+              surface: '#121218',
+              card: '#181822',
+              rose: '#E11D48',
+              amber: '#F59E0B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#09090C] text-gray-100 min-h-screen selection:bg-amber-500/30 selection:text-amber-200 overflow-x-hidden">
+
+  <!-- Top Floating Floating Control Bar (Sound & Brand) -->
+  <header class="fixed top-4 left-0 right-0 z-50 px-4 sm:px-8 flex items-center justify-between pointer-events-none">
+    <a href="index.html" class="pointer-events-auto glass-pill px-3.5 py-1.5 rounded-full flex items-center gap-2 text-xs font-semibold text-white hover:bg-white/10 transition shadow-lg">
+      <div class="w-4 h-4 rounded bg-amber-400 flex items-center justify-center text-black font-extrabold text-[9px]">
+        4u
+      </div>
+      <span>card4u</span>
+    </a>
+
+    <div class="flex items-center gap-2 pointer-events-auto">
+      <!-- Music Player Equalizer Pill -->
+      <button id="card-music-toggle" class="glass-pill px-3.5 py-1.5 rounded-full flex items-center gap-2 text-xs font-medium text-amber-300 hover:bg-white/10 transition shadow-lg" title="Toggle Music">
+        <div class="flex items-end gap-0.5 h-3.5" id="equalizer-bars">
+          <div class="equalizer-bar"></div>
+          <div class="equalizer-bar"></div>
+          <div class="equalizer-bar"></div>
+          <div class="equalizer-bar"></div>
+        </div>
+        <span id="music-status-text">Sound On</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- STATE 1: Sealed Envelope Experience (Initial Screen) -->
+  <div id="unseal-screen" class="fixed inset-0 z-40 bg-[#0A0A0D] flex flex-col items-center justify-center p-4 transition-opacity duration-1000">
+    <!-- Ambient backlights -->
+    <div class="absolute w-96 h-96 bg-amber-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <div class="text-center mb-10 z-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-pill border border-amber-400/30 text-amber-300 text-xs font-semibold mb-3">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
+        <span>Special Delivery</span>
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-white" id="envelope-to-name">
+        For Our Dear Friend
+      </h2>
+      <p class="text-xs sm:text-sm text-gray-400 mt-1">Tap the wax seal to unseal your invitation ✨</p>
+    </div>
+
+    <!-- 3D Realistic Envelope -->
+    <div class="envelope-stage z-10">
+      <div id="recipient-envelope" class="envelope-wrapper">
+        <div class="envelope-body" id="envelope-body-el" style="background: #5C0612;">
+          <div class="envelope-pocket-left"></div>
+          <div class="envelope-pocket-right"></div>
+          <div class="envelope-pocket-bottom"></div>
+        </div>
+
+        <div class="envelope-letter flex flex-col justify-between" id="envelope-letter-el" style="border: 1px solid #E5D5BA;">
+          <div class="text-left">
+            <span class="text-[10px] uppercase font-bold text-amber-800 tracking-wider" id="env-preview-occasion">
+              CELEBRATION INVITATION
+            </span>
+            <h4 class="text-sm font-bold text-gray-900 mt-1 line-clamp-2" id="env-preview-title">
+              Together with our families...
+            </h4>
+          </div>
+          <div class="text-right text-[10px] text-amber-900 font-semibold">
+            Opening your card... &darr;
+          </div>
+        </div>
+
+        <div class="envelope-flap" id="envelope-flap-el"></div>
+
+        <button id="recipient-wax-seal" class="wax-seal" title="Tap to open card">
+          <div class="wax-seal-inner">
+            <i data-lucide="heart" class="w-5 h-5 fill-current" id="env-seal-icon"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-8 text-xs text-gray-500 z-10 flex items-center gap-1.5">
+      <i data-lucide="volume-2" class="w-3.5 h-3.5 text-amber-400"></i>
+      <span>Turn your sound on for the full experience</span>
+    </div>
+  </div>
+
+  <!-- STATE 2: Full Cinematic Card Experience (Shown after unsealing) -->
+  <main id="card-main-content" class="min-h-screen pb-28 pt-20 px-4 sm:px-6 relative opacity-0 pointer-events-none transition-opacity duration-1000">
+    
+    <div class="max-w-2xl mx-auto space-y-10">
+      
+      <!-- 1. Hero Cover Section -->
+      <section class="text-center pt-8 pb-4 relative">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-pill border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-widest mb-4" id="card-badge">
+          Wedding Invitation
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white font-serif-luxury tracking-tight leading-tight mb-4" id="card-recipient-name">
+          Rohan & Ananya
+        </h1>
+
+        <p class="text-base sm:text-xl text-amber-200/90 font-light max-w-lg mx-auto leading-relaxed" id="card-headline">
+          Together with our families, we joyfully invite you to celebrate our wedding!
+        </p>
+      </section>
+
+      <!-- 2. Live Countdown Clock -->
+      <section class="glass-panel p-6 rounded-3xl border border-white/10 text-center shadow-xl">
+        <span class="text-xs uppercase tracking-widest text-gray-400 font-semibold block mb-3">
+          Countdown to the Big Day
+        </span>
+        <div class="grid grid-cols-4 gap-2 max-w-sm mx-auto">
+          <div class="bg-black/50 border border-white/10 rounded-2xl p-3">
+            <span class="text-2xl sm:text-3xl font-extrabold text-amber-400" id="clock-days">00</span>
+            <span class="block text-[10px] text-gray-400 uppercase tracking-wider mt-0.5">Days</span>
+          </div>
+          <div class="bg-black/50 border border-white/10 rounded-2xl p-3">
+            <span class="text-2xl sm:text-3xl font-extrabold text-amber-400" id="clock-hours">00</span>
+            <span class="block text-[10px] text-gray-400 uppercase tracking-wider mt-0.5">Hours</span>
+          </div>
+          <div class="bg-black/50 border border-white/10 rounded-2xl p-3">
+            <span class="text-2xl sm:text-3xl font-extrabold text-amber-400" id="clock-mins">00</span>
+            <span class="block text-[10px] text-gray-400 uppercase tracking-wider mt-0.5">Mins</span>
+          </div>
+          <div class="bg-black/50 border border-white/10 rounded-2xl p-3">
+            <span class="text-2xl sm:text-3xl font-extrabold text-amber-400" id="clock-secs">00</span>
+            <span class="block text-[10px] text-gray-400 uppercase tracking-wider mt-0.5">Secs</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Heartfelt Message Letter -->
+      <section class="relative">
+        <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-amber-500/20 shadow-2xl relative overflow-hidden bg-gradient-to-b from-[#14121A] to-[#0E0D14]">
+          <div class="w-10 h-10 rounded-full bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400 mb-6">
+            <i data-lucide="quote" class="w-5 h-5"></i>
+          </div>
+
+          <p class="text-base sm:text-lg text-gray-200 leading-relaxed font-serif-luxury italic mb-6" id="card-letter-message">
+            "Two souls, one destiny. Join us as we begin our forever under the stars. Your presence and blessings will make our special day truly complete."
+          </p>
+
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-gray-400 font-medium">
+            <span>With all our warmth,</span>
+            <span class="text-amber-400 font-bold" id="card-sender-name">The Verma & Sharma Families</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Interactive Scratch-to-Reveal Surprise Card -->
+      <section class="glass-panel p-6 sm:p-8 rounded-3xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-transparent to-rose-500/10 text-center shadow-xl">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 text-xs font-bold mb-3">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          <span>Secret Surprise Note</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2">Scratch To Reveal Surprise!</h3>
+        <p class="text-xs text-gray-400 mb-6">
+          Drag your finger or mouse across the golden foil to uncover the hidden message.
+        </p>
+
+        <div class="scratch-box !h-[120px] mx-auto border border-amber-400/40">
+          <div class="scratch-secret">
+            <p class="text-sm sm:text-base font-bold text-amber-950 px-4" id="card-secret-revealed">
+              💍 Secret Venue Tip: Join us on the terrace at 9 PM for fireworks!
+            </p>
+          </div>
+          <canvas id="card-scratch-canvas" class="scratch-canvas"></canvas>
+        </div>
+      </section>
+
+      <!-- 5. Polaroid Memories Slideshow -->
+      <section class="space-y-4" id="photos-section">
+        <div class="text-center">
+          <span class="text-xs uppercase tracking-widest text-amber-400 font-bold">Cherished Moments</span>
+          <h3 class="text-2xl font-bold text-white mt-1">Photo Memories</h3>
+        </div>
+
+        <div class="relative max-w-lg mx-auto">
+          <div class="polaroid-card mx-auto max-w-sm">
+            <div class="aspect-[4/3] overflow-hidden rounded bg-gray-900 mb-3">
+              <img id="gallery-main-img" src="" class="w-full h-full object-cover">
+            </div>
+            <div class="flex items-center justify-between text-xs text-gray-700 font-script text-base">
+              <span id="gallery-caption">Unforgettable moments together ✨</span>
+              <span class="text-xs text-gray-400 font-sans" id="gallery-counter">1 of 3</span>
+            </div>
+          </div>
+
+          <!-- Carousel Controls -->
+          <div class="flex items-center justify-center gap-4 mt-4">
+            <button id="gallery-prev-btn" class="p-2.5 rounded-full glass-panel hover:bg-white/20 text-white transition">
+              <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            </button>
+            <div id="gallery-dots" class="flex items-center gap-1.5">
+              <!-- Dots -->
+            </div>
+            <button id="gallery-next-btn" class="p-2.5 rounded-full glass-panel hover:bg-white/20 text-white transition">
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Venue & Location Section -->
+      <section class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 shadow-xl" id="venue-section">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400 shrink-0">
+              <i data-lucide="map-pin" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <span class="text-xs uppercase tracking-wider text-amber-400 font-bold">Celebration Venue</span>
+              <h4 class="text-lg font-bold text-white mt-1" id="card-venue-name">
+                The Leela Palace Royal Ballroom
+              </h4>
+              <p class="text-xs text-gray-400 mt-1" id="card-date-formatted">
+                Saturday, December 18, 2026 at 6:30 PM
+              </p>
+            </div>
+          </div>
+
+          <a id="card-maps-btn" href="https://maps.google.com" target="_blank" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs flex items-center justify-center gap-2 border border-white/20 transition shrink-0">
+            <i data-lucide="navigation" class="w-4 h-4 text-amber-400"></i>
+            <span>Get Directions</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- 7. Interactive RSVP & Wishes Wall -->
+      <section class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl space-y-6">
+        <div>
+          <span class="text-xs uppercase tracking-widest text-amber-400 font-bold">RSVP & Guestbook</span>
+          <h3 class="text-2xl font-bold text-white mt-1">Join the Celebration</h3>
+          <p class="text-xs text-gray-400 mt-1">Let us know if you can make it and leave your sweet wishes!</p>
+        </div>
+
+        <!-- RSVP Form -->
+        <form id="rsvp-form" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-1">Your Name</label>
+              <input type="text" id="rsvp-name" required class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400 transition" placeholder="e.g. Priya Sharma">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-1">Attendance Status</label>
+              <select id="rsvp-status" class="w-full px-3.5 py-2.5 rounded-xl bg-[#121218] border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400 transition">
+                <option value="attending">🎉 Yes, Joyfully Attending!</option>
+                <option value="maybe">🤔 Not sure yet / Maybe</option>
+                <option value="declined">💌 Sadly Cannot Make It</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-300 mb-1">Your Heartfelt Wish or Note</label>
+            <textarea id="rsvp-wish" rows="3" required class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400 transition" placeholder="Write your warmest blessings and thoughts..."></textarea>
+          </div>
+
+          <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 text-black font-bold text-sm shadow-lg shadow-amber-500/25 hover:scale-[1.02] transition flex items-center justify-center gap-2">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>Send RSVP & Post Wish</span>
+          </button>
+        </form>
+
+        <!-- Live Wishes Wall -->
+        <div class="pt-6 border-t border-white/10">
+          <h4 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
+            <i data-lucide="message-heart" class="w-4 h-4 text-amber-400"></i>
+            <span>Celebration Wishes Wall</span>
+          </h4>
+
+          <div id="wishes-wall-container" class="space-y-3">
+            <!-- Rendered Wishes -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. Footer Link to Create Your Own Card (Zero Pricing) -->
+      <section class="text-center pt-8 border-t border-white/10 space-y-4">
+        <p class="text-xs text-gray-400">
+          Designed with ❤️ using <strong class="text-white">card4u</strong>
+        </p>
+        <a href="studio.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-xs border border-white/20 transition">
+          <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
+          <span>Create Your Own Free Card</span>
+        </a>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Floating Heart Reaction Action Button (Bottom Right) -->
+  <button id="floating-reaction-btn" class="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-gradient-to-tr from-rose-600 to-pink-500 text-white shadow-xl shadow-rose-600/30 flex items-center justify-center hover:scale-110 active:scale-95 transition" title="Tap to send hearts!">
+    <i data-lucide="heart" class="w-7 h-7 fill-current animate-pulse"></i>
+  </button>
+
+  <!-- Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/scratch.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/viewer.js"></script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>card4u Studio — Design Your Interactive Card</title>
+  <meta name="description" content="Personalize your cinematic digital greeting card with interactive wax envelopes, scratch reveals, music, and instant sharing. 100% Free.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D4AF37'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              gold: '#D4AF37',
+              dark: '#0A0A0D',
+              surface: '#121218',
+              card: '#181822',
+              rose: '#E11D48',
+              amber: '#F59E0B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- QRCode generator lib -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#09090C] text-gray-100 min-h-screen flex flex-col selection:bg-amber-500/30 selection:text-amber-200">
+
+  <!-- Top Studio Bar -->
+  <header class="sticky top-0 z-40 glass-panel border-b border-white/10 px-4 sm:px-6 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition flex items-center gap-1.5 text-xs font-semibold">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        <span class="hidden sm:inline">Back</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <span class="text-lg font-bold text-white tracking-tight">card<span class="text-amber-400">4u</span></span>
+        <span class="text-gray-500 text-sm">/</span>
+        <span class="text-xs sm:text-sm font-semibold text-gray-300">Design Studio</span>
+        <span class="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400 text-black">
+          100% Free
+        </span>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <!-- Music Preview Toggle -->
+      <button id="toggle-audio-btn" class="p-2 sm:px-3 sm:py-2 rounded-full glass-panel hover:bg-white/10 text-gray-300 text-xs font-medium flex items-center gap-1.5 transition">
+        <i data-lucide="volume-2" class="w-4 h-4 text-amber-400"></i>
+        <span class="hidden sm:inline">Sound</span>
+      </button>
+
+      <!-- Full Preview Button -->
+      <button id="preview-full-btn" class="px-3.5 py-2 rounded-full glass-panel hover:bg-white/10 text-white text-xs font-semibold flex items-center gap-1.5 border border-white/20 transition">
+        <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-400"></i>
+        <span>Full Preview</span>
+      </button>
+
+      <!-- Share & Get Link Button -->
+      <button id="open-share-btn" class="px-5 py-2 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 text-black text-xs font-bold shadow-lg shadow-amber-500/20 hover:scale-105 transition flex items-center gap-1.5">
+        <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+        <span>Share Card</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Studio Workspace (Left Controls, Right Live Device Preview) -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-8">
+    
+    <!-- Left Column: Customization Controls (Scrollable) -->
+    <div class="flex-1 max-w-2xl space-y-6 pb-20">
+      
+      <!-- 1. Template Selector -->
+      <div class="glass-panel p-6 rounded-2xl border border-white/10">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-amber-400/20 text-amber-400 font-bold text-xs flex items-center justify-center">1</span>
+            <h2 class="text-base font-bold text-white">Choose Template Theme</h2>
+          </div>
+          <span class="text-xs text-amber-400/80 font-medium" id="current-template-name">Royal Shubh Vivah</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="template-options">
+          <!-- Populated by studio.js -->
+        </div>
+      </div>
+
+      <!-- 2. Occasion & Recipient Info -->
+      <div class="glass-panel p-6 rounded-2xl border border-white/10">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-6 h-6 rounded-full bg-amber-400/20 text-amber-400 font-bold text-xs flex items-center justify-center">2</span>
+          <h2 class="text-base font-bold text-white">Recipient & Title</h2>
+        </div>
+
+        <div class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-1">Recipient Name(s)</label>
+              <input type="text" id="input-recipient" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400 transition" placeholder="e.g. Maya or Rohan & Ananya">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-1">Sender / From</label>
+              <input type="text" id="input-sender" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400 transition" placeholder="e.g. Yours Always, Kabir">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-300 mb-1">Card Main Headline</label>
+            <input type="text" id="input-title" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400 transition" placeholder="e.g. Happy 25th Birthday to my favorite human! 🎉">
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Heartfelt Message -->
+      <div class="glass-panel p-6 rounded-2xl border border-white/10">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-amber-400/20 text-amber-400 font-bold text-xs flex items-center justify-center">3</span>
+            <h2 class="text-base font-bold text-white">Your Heartfelt Message</h2>
+          </div>
+        </div>
+
+        <!-- Preset Chips -->
+        <div class="flex flex-wrap gap-2 mb-3">
+          <button type="button" class="preset-chip text-[11px] px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10" data-preset="romantic">
+            ❤️ Romantic Love
+          </button>
+          <button type="button" class="preset-chip text-[11px] px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10" data-preset="birthday">
+            🎂 Birthday Bestie
+          </button>
+          <button type="button" class="preset-chip text-[11px] px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10" data-preset="wedding">
+            💍 Wedding Invite
+          </button>
+          <button type="button" class="preset-chip text-[11px] px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10" data-preset="anniversary">
+            🥂 10th Anniversary
+          </button>
+        </div>
+
+        <textarea id="input-message" rows="4" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400 transition" placeholder="Write your heartfelt message here..."></textarea>
+      </div>
+
+      <!-- 4. Scratch-to-Reveal Surprise Secret -->
+      <div class="glass-panel p-6 rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-transparent">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-amber-400 text-black font-bold text-xs flex items-center justify-center">4</span>
+            <h2 class="text-base font-bold text-white flex items-center gap-1.5">
+              <span>Scratch-to-Reveal Surprise</span>
+              <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
+            </h2>
+          </div>
+          <span class="text-[11px] font-semibold text-amber-300 bg-amber-400/10 px-2 py-0.5 rounded">Gold Foil Card</span>
+        </div>
+        <p class="text-xs text-gray-400 mb-3">
+          This message will be hidden under a shimmering gold scratch-off layer. Your recipient will drag a virtual coin to scratch and reveal it!
+        </p>
+        <input type="text" id="input-secret" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-amber-300 font-medium text-sm focus:outline-none focus:border-amber-400 transition" placeholder="e.g. 🎁 Surprise: Pack your bags, we are going to Paris this weekend! ✈️">
+      </div>
+
+      <!-- 5. Event Schedule & Location (Optional) -->
+      <div class="glass-panel p-6 rounded-2xl border border-white/10">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-6 h-6 rounded-full bg-amber-400/20 text-amber-400 font-bold text-xs flex items-center justify-center">5</span>
+          <h2 class="text-base font-bold text-white">Event Date & Location</h2>
+        </div>
+
+        <div class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-1">Event Date & Time (for Countdown)</label>
+              <input type="datetime-local" id="input-date" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400 transition">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-300 mb-1">Venue / Location Name</label>
+              <input type="text" id="input-venue" class="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-400 transition" placeholder="e.g. The Grand Palace Banquet Hall">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Music & Soundtrack -->
+      <div class="glass-panel p-6 rounded-2xl border border-white/10">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-6 h-6 rounded-full bg-amber-400/20 text-amber-400 font-bold text-xs flex items-center justify-center">6</span>
+          <h2 class="text-base font-bold text-white">Background Music Track</h2>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-3" id="music-options">
+          <button type="button" class="music-card p-3 rounded-xl border border-amber-400 bg-amber-400/10 text-left transition flex flex-col justify-between" data-track="romantic">
+            <span class="text-xs font-bold text-white">Romantic</span>
+            <span class="text-[10px] text-gray-400">Gentle Piano</span>
+          </button>
+          <button type="button" class="music-card p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-left transition flex flex-col justify-between" data-track="birthday">
+            <span class="text-xs font-bold text-white">Birthday</span>
+            <span class="text-[10px] text-gray-400">Festive Chimes</span>
+          </button>
+          <button type="button" class="music-card p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-left transition flex flex-col justify-between" data-track="royal">
+            <span class="text-xs font-bold text-white">Royal Shehnai</span>
+            <span class="text-[10px] text-gray-400">Palace Strings</span>
+          </button>
+          <button type="button" class="music-card p-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-left transition flex flex-col justify-between" data-track="chill">
+            <span class="text-xs font-bold text-white">Chill Lo-Fi</span>
+            <span class="text-[10px] text-gray-400">Relaxed Beats</span>
+          </button>
+        </div>
+
+        <div class="mt-2">
+          <label class="block text-[11px] text-gray-400 mb-1">Or paste a custom MP3 audio URL (optional):</label>
+          <input type="url" id="input-custom-audio" class="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-amber-400 transition" placeholder="https://example.com/your-song.mp3">
+        </div>
+      </div>
+
+      <!-- 7. Polaroid Photos Gallery -->
+      <div class="glass-panel p-6 rounded-2xl border border-white/10">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-amber-400/20 text-amber-400 font-bold text-xs flex items-center justify-center">7</span>
+            <h2 class="text-base font-bold text-white">Photo Memories (Polaroid Slides)</h2>
+          </div>
+          <span class="text-xs text-gray-400">Upload or choose</span>
+        </div>
+
+        <div class="space-y-3">
+          <div class="flex items-center gap-3">
+            <label class="cursor-pointer px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold flex items-center gap-2 border border-white/10 transition">
+              <i data-lucide="upload" class="w-4 h-4 text-amber-400"></i>
+              <span>Upload Custom Photo</span>
+              <input type="file" id="photo-upload-input" accept="image/*" class="hidden">
+            </label>
+            <span class="text-xs text-gray-500">JPG, PNG, or WebP</span>
+          </div>
+
+          <div id="photo-thumbnails" class="grid grid-cols-3 gap-3 pt-2">
+            <!-- Rendered photos -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Live iPhone Device Mockup (Sticky Preview) -->
+    <div class="lg:w-[400px] flex flex-col items-center">
+      <div class="sticky top-24 flex flex-col items-center">
+        
+        <!-- Preview Device Bar -->
+        <div class="mb-3 flex items-center gap-2 text-xs text-gray-400">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Live Mobile Preview • Tap elements to interact</span>
+        </div>
+
+        <!-- iPhone Mockup Shell -->
+        <div class="iphone-frame shadow-2xl">
+          <!-- Dynamic Island -->
+          <div class="iphone-island">
+            <div class="iphone-island-lens"></div>
+          </div>
+
+          <!-- Inside Screen (Interactive Card Live Sync) -->
+          <div class="iphone-screen p-4 flex flex-col items-center justify-start text-center" id="phone-preview-screen">
+            
+            <!-- Envelope Opening Preview Area -->
+            <div class="w-full pt-8 pb-4" id="phone-envelope-container">
+              <div class="text-[10px] text-amber-300 font-semibold tracking-wider uppercase mb-3">
+                Tap wax seal to open card
+              </div>
+
+              <div id="phone-envelope" class="envelope-wrapper scale-90 -mt-2">
+                <div class="envelope-body" id="preview-env-body" style="background: #5C0612;">
+                  <div class="envelope-pocket-left"></div>
+                  <div class="envelope-pocket-right"></div>
+                  <div class="envelope-pocket-bottom"></div>
+                </div>
+
+                <div class="envelope-letter flex flex-col justify-between" id="preview-env-letter">
+                  <div class="text-left">
+                    <span class="text-[9px] uppercase tracking-wider text-amber-800 font-bold" id="preview-env-occasion">Wedding Invitation</span>
+                    <h5 class="text-xs font-bold text-gray-900 mt-1 line-clamp-2" id="preview-env-title">Together with our families...</h5>
+                  </div>
+                  <div class="text-right text-[9px] text-gray-500 font-medium">
+                    Tap to open &darr;
+                  </div>
+                </div>
+
+                <div class="envelope-flap" id="preview-env-flap"></div>
+
+                <button id="phone-wax-seal" class="wax-seal">
+                  <div class="wax-seal-inner">
+                    <i data-lucide="crown" class="w-4 h-4 fill-current" id="preview-seal-icon"></i>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Unfolded Card Contents (Visible when opened) -->
+            <div id="phone-card-unfolded" class="hidden w-full text-left space-y-4 pt-4 pb-12">
+              
+              <!-- Recipient & Occasion Header -->
+              <div class="text-center pb-2 border-b border-white/10">
+                <span class="text-[10px] uppercase tracking-widest text-amber-400 font-bold px-2 py-0.5 rounded-full bg-amber-400/10 border border-amber-400/20" id="preview-badge">
+                  Wedding Celebration
+                </span>
+                <h3 class="text-lg font-extrabold text-white mt-2 font-serif-luxury" id="preview-recipient-name">
+                  Rohan & Ananya
+                </h3>
+                <p class="text-[11px] text-gray-300 mt-1 leading-snug" id="preview-headline">
+                  Together with our families, we joyfully invite you...
+                </p>
+              </div>
+
+              <!-- Live Countdown Widget -->
+              <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+                <span class="text-[9px] text-gray-400 uppercase tracking-wider font-semibold">Counting Down To The Moment</span>
+                <div class="grid grid-cols-4 gap-1 mt-1 text-center" id="preview-countdown-box">
+                  <div class="bg-black/40 rounded p-1"><span class="text-xs font-bold text-amber-400" id="prev-d">04</span><div class="text-[8px] text-gray-400">Days</div></div>
+                  <div class="bg-black/40 rounded p-1"><span class="text-xs font-bold text-amber-400" id="prev-h">18</span><div class="text-[8px] text-gray-400">Hours</div></div>
+                  <div class="bg-black/40 rounded p-1"><span class="text-xs font-bold text-amber-400" id="prev-m">22</span><div class="text-[8px] text-gray-400">Mins</div></div>
+                  <div class="bg-black/40 rounded p-1"><span class="text-xs font-bold text-amber-400" id="prev-s">45</span><div class="text-[8px] text-gray-400">Secs</div></div>
+                </div>
+              </div>
+
+              <!-- Heartfelt Message Box -->
+              <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 text-xs text-gray-200 leading-relaxed italic font-serif" id="preview-body-message">
+                "Two souls, one destiny. Join us as we begin our forever under the stars..."
+              </div>
+
+              <!-- Live Interactive Scratch-to-Reveal in Preview -->
+              <div class="space-y-1">
+                <span class="text-[10px] text-amber-300 font-semibold flex items-center gap-1">
+                  <i data-lucide="sparkles" class="w-3 h-3 text-amber-400"></i>
+                  <span>Scratch to reveal secret note:</span>
+                </span>
+                <div class="scratch-box !h-[90px] mx-auto border border-amber-400/30">
+                  <div class="scratch-secret p-2 text-center">
+                    <p class="text-[11px] font-bold text-amber-900" id="preview-secret-text">
+                      💍 Secret Venue Tip: Join us on the terrace at 9 PM for fireworks!
+                    </p>
+                  </div>
+                  <canvas id="preview-scratch-canvas" class="scratch-canvas"></canvas>
+                </div>
+              </div>
+
+              <!-- Photo Gallery Preview -->
+              <div id="preview-photo-slider" class="overflow-hidden rounded-xl">
+                <img id="preview-single-photo" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80" class="w-full h-36 object-cover rounded-xl border border-white/10">
+              </div>
+
+              <!-- Venue Details -->
+              <div class="p-3 rounded-xl bg-white/5 border border-white/10 text-xs space-y-1">
+                <span class="text-[9px] uppercase tracking-wider text-amber-400 font-bold">Venue & Reception</span>
+                <p class="text-white font-medium" id="preview-venue-name">The Leela Palace Royal Ballroom, Udaipur</p>
+              </div>
+
+              <!-- Reset to Folded Envelope Button -->
+              <div class="text-center pt-2">
+                <button id="phone-reset-fold" class="text-[10px] text-amber-400/80 hover:text-amber-300 underline font-medium">
+                  &larr; Fold card back into envelope
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Share Modal (100% Free, Instant Sharing Link & QR Code) -->
+  <div id="share-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-panel max-w-md w-full p-6 sm:p-8 rounded-3xl border border-amber-400/30 shadow-2xl relative text-center">
+      
+      <!-- Close button -->
+      <button id="close-share-modal" class="absolute top-4 right-4 p-2 text-gray-400 hover:text-white rounded-full bg-white/5 hover:bg-white/10">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Modal Content -->
+      <div class="w-14 h-14 rounded-full bg-amber-400/20 text-amber-400 mx-auto flex items-center justify-center mb-4">
+        <i data-lucide="party-popper" class="w-7 h-7"></i>
+      </div>
+
+      <h3 class="text-2xl font-extrabold text-white mb-1">Your Card is Ready!</h3>
+      <p class="text-xs text-gray-400 mb-6">
+        Share this interactive experience with your loved ones. Completely free, no watermarks!
+      </p>
+
+      <!-- Generated Link Box -->
+      <div class="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2 mb-4 text-left">
+        <input type="text" id="share-url-input" readonly class="bg-transparent text-xs text-amber-300 flex-1 focus:outline-none select-all truncate">
+        <button id="copy-link-btn" class="px-3 py-1.5 rounded-lg bg-amber-400 text-black text-xs font-bold hover:bg-amber-300 transition flex items-center gap-1">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          <span id="copy-btn-text">Copy</span>
+        </button>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="grid grid-cols-2 gap-3 mb-6">
+        <!-- WhatsApp Share -->
+        <a id="whatsapp-share-btn" href="#" target="_blank" class="py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow-lg shadow-emerald-600/20">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>Send on WhatsApp</span>
+        </a>
+
+        <!-- Open Direct Card -->
+        <a id="open-card-direct" href="#" target="_blank" class="py-3 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs flex items-center justify-center gap-2 transition border border-white/20">
+          <i data-lucide="external-link" class="w-4 h-4"></i>
+          <span>Open Full View</span>
+        </a>
+      </div>
+
+      <!-- QR Code Section -->
+      <div class="border-t border-white/10 pt-4 flex flex-col items-center">
+        <span class="text-[11px] text-gray-400 mb-2 font-medium">Or scan QR code to open directly:</span>
+        <div id="qrcode-container" class="bg-white p-3 rounded-xl shadow-md mb-2"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/scratch.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/studio.js"></script>
+</body>
+</html>
