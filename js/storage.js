@@ -181,11 +181,34 @@ class CardStorage {
     }
   }
 
-  // Generate shareable link
+  // Generate shareable link (bulletproof across file://, GitHub Pages, Vercel & local server)
   getShareableUrl(cardData, baseUrl = null) {
     const encoded = this.encodeCard(cardData);
-    const origin = baseUrl || window.location.href.split(/[?#]/)[0].replace(/studio\.html|index\.html/, 'card.html');
-    return `${origin}#data=${encoded}`;
+    if (baseUrl) return `${baseUrl}#data=${encoded}`;
+
+    try {
+      const currentUrl = window.location.href.split(/[?#]/)[0];
+      let targetUrl = '';
+
+      if (currentUrl.endsWith('/studio.html')) {
+        targetUrl = currentUrl.replace('/studio.html', '/card.html');
+      } else if (currentUrl.endsWith('/studio')) {
+        targetUrl = currentUrl.replace('/studio', '/card');
+      } else if (currentUrl.endsWith('/index.html')) {
+        targetUrl = currentUrl.replace('/index.html', '/card.html');
+      } else if (currentUrl.endsWith('/')) {
+        targetUrl = currentUrl + 'card.html';
+      } else if (currentUrl.endsWith('card4u')) {
+        targetUrl = currentUrl + '/card.html';
+      } else {
+        const lastSlash = currentUrl.lastIndexOf('/');
+        targetUrl = currentUrl.substring(0, lastSlash + 1) + 'card.html';
+      }
+
+      return `${targetUrl}#data=${encoded}`;
+    } catch (e) {
+      return `card.html#data=${encoded}`;
+    }
   }
 }
 
